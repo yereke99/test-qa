@@ -1,73 +1,57 @@
 from selenium.webdriver.common.by import By
 
-zero_xpath = (By.ID, "com.miui.calculator:id/btn_0_s")
-one_xpath = (By.ID, "com.miui.calculator:id/btn_1_s")
-two_xpath = (By.ID, "com.miui.calculator:id/btn_2_s")
-three_xpath = (By.ID, "com.miui.calculator:id/btn_3_s")
-four_xpath = (By.ID, "com.miui.calculator:id/btn_4_s")
-five_xpath = (By.ID, "com.miui.calculator:id/btn_5_s")
-six_xpath = (By.ID, "com.miui.calculator:id/btn_6_s")
-seven_xpath = (By.ID, "com.miui.calculator:id/btn_7_s")
-eight_xpath = (By.ID, "com.miui.calculator:id/btn_8_s")
-nine_xpath = (By.ID, "com.miui.calculator:id/btn_9_s")
-plus_xpath = (By.ID, "com.miui.calculator:id/btn_plus_s")
-minus_xpath = (By.ID, "com.miui.calculator:id/btn_minus_s")
-mul_xpath = (By.ID, "com.miui.calculator:id/btn_mul_s")
-divide_xpath = (By.ID, "com.miui.calculator:id/btn_div_s")
-percent_xpath = (By.ID, "com.miui.calculator:id/btn_percent_s")
-equal_xpath = (By.ID, "com.miui.calculator:id/btn_equal_s")
-expression_xpath = (By.ID, "com.miui.calculator:id/expression")
-result_xpath = (By.ID, "com.miui.calculator:id/result")
-clear_xpath = (By.ID, "com.miui.calculator:id/btn_c_s")
-
 class CalculatorPage:
+    input_xpath = (By.ID, "input")
+    output_xpath = (By.ID, "output")
+    button_clear_xpath = (By.ID, "button_clear")
+    button_bracket_left_xpath = (By.ID, "button_bracket_left")
+    button_bracket_right_xpath = (By.ID, "button_bracket_right")
+    button_division_xpath = (By.ID, "button_division")
+    button_0_xpath = (By.ID, "button_0")
+    button_1_xpath = (By.ID, "button_1")
+    button_2_xpath = (By.ID, "button_2")
+    button_3_xpath = (By.ID, "button_3")
+    button_4_xpath = (By.ID, "button_4")
+    button_5_xpath = (By.ID, "button_5")
+    button_6_xpath = (By.ID, "button_6")
+    button_7_xpath = (By.ID, "button_7")
+    button_8_xpath = (By.ID, "button_8")
+    button_9_xpath = (By.ID, "button_9")
+    button_multiply_xpath = (By.ID, "button_multiply")
+    button_subtraction_xpath = (By.ID, "button_subtraction")
+    button_addition_xpath = (By.ID, "button_addition")
+    button_percent_xpath = (By.ID, "button_percent")
+    button_dot_xpath = (By.ID, "button_dot")
+    button_equals_xpath = (By.ID, "button_equals")
 
     def __init__(self, driver):
         self.driver = driver
 
-    def select_buton(self, option):
-        if option == 0:
-            self.driver.find_element(*zero_xpath).click()
-        if option == 1:
-            self.driver.find_element(*one_xpath).click()
-        if option == 2:
-            self.driver.find_element(*two_xpath).click()
-        if option == 3:
-            self.driver.find_element(*three_xpath).click()
-        if option == 4:
-            self.driver.find_element(*four_xpath).click()
-        if option == 5:
-            self.driver.find_element(*five_xpath).click()
-        if option == 6:
-            self.driver.find_element(*six_xpath).click()
-        if option == 7:
-            self.driver.find_element(*seven_xpath).click()
-        if option == 8:
-            self.driver.find_element(*eight_xpath).click()
-        if option == 9:
-            self.driver.find_element(*nine_xpath).click()
-        if option == "+":
-            self.driver.find_element(*plus_xpath).click()
-        if option == "-":
-            self.driver.find_element(*minus_xpath).click()
-        if option == "/":
-            self.driver.find_element(*divide_xpath).click()
-        if option == "*":
-            self.driver.find_element(*mul_xpath).click()
-        if option == "%":
-            self.driver.find_element(*percent_xpath).click()
-        if option == "=":
-            self.driver.find_element(*equal_xpath).click()
-        if option == "c":
-            self.driver.find_element(*clear_xpath).click()
+    def select_button(self, option):
+        button_map = {
+            '0': self.button_0_xpath,
+            '1': self.button_1_xpath,
+            '2': self.button_2_xpath,
+            '3': self.button_3_xpath,
+            '4': self.button_4_xpath,
+            '5': self.button_5_xpath,
+            '6': self.button_6_xpath,
+            '7': self.button_7_xpath,
+            '8': self.button_8_xpath,
+            '9': self.button_9_xpath,
+            '+': self.button_addition_xpath,
+            '-': self.button_subtraction_xpath,
+            '/': self.button_division_xpath,
+            '*': self.button_multiply_xpath,
+            '%': self.button_percent_xpath,
+            '=': self.button_equals_xpath,
+            'c': self.button_clear_xpath
+        }
+        self.driver.find_element(*button_map[str(option)]).click()
 
     def click_to(self, option):
-        if str(option).isdigit() and option >9:
-            for op in option.__str__():
-                self.select_buton(int(op))
-        else:
-            self.select_buton(option)
-
+        for op in str(option):
+            self.select_button(op)
 
     def operate(self, a, operation, b):
         self.click_to("c")
@@ -77,9 +61,15 @@ class CalculatorPage:
         self.click_to("=")
 
     def is_result_equal(self, result):
-        res = self.driver.find_element(*result_xpath).text
-        print("result is = "+res)
+        res = self.driver.find_element(*self.output_xpath).text
+        print("result is = " + res)
         return str(result) in res
 
+    def check_error_message(self, error_message):
+        # Assuming the error message is displayed in the output field
+        res = self.driver.find_element(*self.output_xpath).text
+        print("error message = " + res)
+        return error_message in res
+
     def open_app(self):
-        self.driver.activate_app('com.miui.calculator')
+        self.driver.activate_app('com.pscretn.calc')

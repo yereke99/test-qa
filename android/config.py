@@ -1,15 +1,15 @@
 import pytest
 from appium import webdriver
 
-APPIUM_SERVER_PATH = 'http://172.20.19.214:4723/wd/hub'
-current_device = {
-    "platformName": "Android",
-    "deviceName": "emulator-5554"
-}
-
-
-@pytest.fixture(scope="class")
+@pytest.fixture(scope='module')
 def mobile_driver():
-    driver = webdriver.Remote(APPIUM_SERVER_PATH, current_device)
+    desired_caps = {
+        'platformName': 'Android',
+        'deviceName': 'Pixel_6_API_UpsideDownCakes',  # Update with your emulator or device name
+        'app': '/app/build/outputs/apk/debug/apk-debug.apk',  # Update this with the correct path to your APK
+        'automationName': 'UiAutomator2'
+    }
+
+    driver = webdriver.Remote('http://localhost:4723/wd/hub', desired_caps)
     yield driver
     driver.quit()

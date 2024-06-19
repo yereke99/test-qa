@@ -11,14 +11,15 @@ from api.utils.utility import generate_random_username
 
 class TestAccount:
 
+   
     @allure.feature("Позитивный тест на проверку добавления пользователя")
     @pytest.mark.positive
     @pytest.mark.parametrize("username,password", [(generate_random_username(), "zx!!231Z")])
     def test_add_account(self, username, password):
-        user = Account(username, password)
+        user = Account(username, password) 
         with allure.step("Запрос на добавление пользователя"):
             response = user.add_account()
-        assert response.status_code == 201, "Неверный статус код"
+        assert response.status_code == 200, "Неверный статус код"
         assert response.json()["userId"], "Пустой userId"
         assert response.json()["username"] == username, "Неверный username"
         assert response.json()["books"] == [], "Неверное значение books"

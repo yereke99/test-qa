@@ -15,6 +15,7 @@ class Account:
             url=ACCOUNT_USER_URL,
             json={"userName": self.username, "password": self.password}
         )
+        print(response.json())
         self.user_id = response.json()["userId"]
         return response
 

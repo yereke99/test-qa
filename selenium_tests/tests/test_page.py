@@ -1,13 +1,3 @@
-import sys
-import os
-
-
-# Добавьте корневую директорию проекта в sys.path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '/Users/yerek/PyPro/yerek-kcell-test-task')))
-
-# Выведите текущие пути
-print(sys.path)
-
 from selenium import webdriver  # Импортируйте webdriver из selenium, а не из selenium_tests
 from selenium_tests.pages.Form_pages import FormPage  # Обновите путь к FormPage
 
