@@ -1,51 +1,51 @@
 from selenium.webdriver.common.by import By
 
-class CalculatorPage:
-    input_xpath = (By.ID, "input")
-    output_xpath = (By.ID, "output")
-    button_clear_xpath = (By.ID, "button_clear")
-    button_bracket_left_xpath = (By.ID, "button_bracket_left")
-    button_bracket_right_xpath = (By.ID, "button_bracket_right")
-    button_division_xpath = (By.ID, "button_division")
-    button_0_xpath = (By.ID, "button_0")
-    button_1_xpath = (By.ID, "button_1")
-    button_2_xpath = (By.ID, "button_2")
-    button_3_xpath = (By.ID, "button_3")
-    button_4_xpath = (By.ID, "button_4")
-    button_5_xpath = (By.ID, "button_5")
-    button_6_xpath = (By.ID, "button_6")
-    button_7_xpath = (By.ID, "button_7")
-    button_8_xpath = (By.ID, "button_8")
-    button_9_xpath = (By.ID, "button_9")
-    button_multiply_xpath = (By.ID, "button_multiply")
-    button_subtraction_xpath = (By.ID, "button_subtraction")
-    button_addition_xpath = (By.ID, "button_addition")
-    button_percent_xpath = (By.ID, "button_percent")
-    button_dot_xpath = (By.ID, "button_dot")
-    button_equals_xpath = (By.ID, "button_equals")
+class CalcPage:
+    input_selector = (By.ID, "input")
+    output_selector = (By.ID, "output")
+    button_clear_selector = (By.ID, "button_clear")
+    button_bracket_left_selector = (By.ID, "button_bracket_left")
+    button_bracket_right_selector = (By.ID, "button_bracket_right")
+    button_division_selector = (By.ID, "button_division")
+    button_0_selector = (By.ID, "button_0")
+    button_1_selector = (By.ID, "button_1")
+    button_2_selector = (By.ID, "button_2")
+    button_3_selector = (By.ID, "button_3")
+    button_4_selector = (By.ID, "button_4")
+    button_5_selector = (By.ID, "button_5")
+    button_6_selector = (By.ID, "button_6")
+    button_7_selector = (By.ID, "button_7")
+    button_8_selector = (By.ID, "button_8")
+    button_9_selector = (By.ID, "button_9")
+    button_multiply_selector = (By.ID, "button_multiply")
+    button_subtraction_selector = (By.ID, "button_subtraction")
+    button_addition_selector = (By.ID, "button_addition")
+    button_percent_selector = (By.ID, "button_percent")
+    button_dot_selector = (By.ID, "button_dot")
+    button_equals_selector = (By.ID, "button_equals")
 
     def __init__(self, driver):
         self.driver = driver
 
     def select_button(self, option):
         button_map = {
-            '0': self.button_0_xpath,
-            '1': self.button_1_xpath,
-            '2': self.button_2_xpath,
-            '3': self.button_3_xpath,
-            '4': self.button_4_xpath,
-            '5': self.button_5_xpath,
-            '6': self.button_6_xpath,
-            '7': self.button_7_xpath,
-            '8': self.button_8_xpath,
-            '9': self.button_9_xpath,
-            '+': self.button_addition_xpath,
-            '-': self.button_subtraction_xpath,
-            '/': self.button_division_xpath,
-            '*': self.button_multiply_xpath,
-            '%': self.button_percent_xpath,
-            '=': self.button_equals_xpath,
-            'c': self.button_clear_xpath
+            '0': self.button_0_selector,
+            '1': self.button_1_selector,
+            '2': self.button_2_selector,
+            '3': self.button_3_selector,
+            '4': self.button_4_selector,
+            '5': self.button_5_selector,
+            '6': self.button_6_selector,
+            '7': self.button_7_selector,
+            '8': self.button_8_selector,
+            '9': self.button_9_selector,
+            '+': self.button_addition_selector,
+            '-': self.button_subtraction_selector,
+            '/': self.button_division_selector,
+            '*': self.button_multiply_selector,
+            '%': self.button_percent_selector,
+            '=': self.button_equals_selector,
+            'c': self.button_clear_selector
         }
         self.driver.find_element(*button_map[str(option)]).click()
 
@@ -61,13 +61,13 @@ class CalculatorPage:
         self.click_to("=")
 
     def is_result_equal(self, result):
-        res = self.driver.find_element(*self.output_xpath).text
+        res = self.driver.find_element(*self.output_selector).text
         print("result is = " + res)
         return str(result) in res
 
     def check_error_message(self, error_message):
         # Assuming the error message is displayed in the output field
-        res = self.driver.find_element(*self.output_xpath).text
+        res = self.driver.find_element(*self.output_selector).text
         print("error message = " + res)
         return error_message in res
 
